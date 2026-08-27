@@ -1,0 +1,71 @@
+class,spec,role
+Barbarian,Brutality,melee
+Barbarian,Headhunting,ranged
+Barbarian,Ancestry,support
+Witch Doctor,Shadowhunting,ranged
+Witch Doctor,Voodoo,ranged
+Witch Doctor,Brewing,healer
+Felsworn,Slaying,melee
+Felsworn,Infernal,ranged
+Felsworn,Tyrant,tank
+Witch Hunter,Boltslinger,ranged
+Witch Hunter,Houndmaster,ranged
+Witch Hunter,Inquisition,melee
+Witch Hunter,Black Knight,tank
+Stormbringer,Maelstrom,ranged
+Stormbringer,Lightning,ranged
+Stormbringer,Wind,support
+Knight of Xoroth,Hellfire,ranged
+Knight of Xoroth,Defiance,tank
+Knight of Xoroth,War,melee
+Guardian,Gladiator,melee
+Guardian,Inspiration,support
+Guardian,Vanguard,tank
+Templar,Oathkeeper,tank
+Templar,Zealot,melee
+Templar,Crusader,melee
+Bloodmage,Fleshweaver,support
+Bloodmage,Sanguine,ranged
+Bloodmage,Accursed,melee
+Bloodmage,Eternal,tank
+Ranger,Archery,ranged
+Ranger,Brigand,melee
+Ranger,Farstrider,support
+Chronomancer,Infinite,ranged
+Chronomancer,Time,healer
+Chronomancer,Artificer,ranged
+Necromancer,Death,ranged
+Necromancer,Rime,ranged
+Necromancer,Animation,ranged
+Pyromancer,Incineration,ranged
+Pyromancer,Flameweaving,healer
+Pyromancer,Draconic,ranged
+Cultist,Heretic,healer
+Cultist,Corruption,ranged
+Cultist,Godblade,melee
+Cultist,Dreadnought,tank
+Starcaller,Sentinel,ranged
+Starcaller,Warden,melee
+Starcaller,Moon Priest,healer
+Starcaller,Moon Guard,tank
+Sun Cleric,Piety,ranged
+Sun Cleric,Blessings,healer
+Sun Cleric,Valkyrie,melee
+Sun Cleric,Seraphim,tank
+Tinker,Mechanics,ranged
+Tinker,Invention,healer
+Tinker,Demolitions,ranged
+Venomancer,Fortitude,tank
+Venomancer,Stalking,melee
+Venomancer,Rotweaver,ranged
+Venomancer,Vizier,healer
+Reaper,Soul,melee
+Reaper,Harvest,melee
+Reaper,Domination,tank
+Primalist,Groovekeeper,support
+Primalist,Wildwalker,melee
+Primalist,Mountain King,tank
+Primalist,Geomancy,ranged
+Runemaster,Engravement,melee
+Runemaster,Glyphic,ranged
+Runemaster,Riftblade,melee

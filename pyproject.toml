@@ -1,0 +1,23 @@
+[project]
+name = "coa-raid"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "e5lan", email = "github@5lan.dev" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "aiosqlite>=0.22.1",
+    "dateparser>=1.4.2",
+    "discord>=2.3.2",
+    "dotenv>=0.9.9",
+    "pillow>=12.3.0",
+]
+
+[project.scripts]
+coa-raid = "coa_raid:main"
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"
