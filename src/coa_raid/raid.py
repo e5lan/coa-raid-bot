@@ -3,9 +3,12 @@ from __future__ import annotations
 import os
 import re
 from datetime import UTC, datetime
+from typing import Literal
 
 import discord
 from discord import app_commands
+
+RAIDER_ROLE_NAMES = ('admin', 'officer', 'raider', 'raidertmp')
 
 from . import db, ui
 from .render import build_raid_embed, update_raid_message
@@ -23,6 +26,23 @@ def _slugify(text: str) -> str:
 def _raid_channel_name(title: str, event_at: datetime | None) -> str:
     date_part = event_at.astimezone(RAID_TIMEZONE).strftime('%d-%b-%H-%M').lower() if event_at else 'tbd'
     return f'{_slugify(title)}-{date_part}'[:100]
+
+
+def _raid_channel_overwrites(
+    guild: discord.Guild, audience: Literal['puggers', 'raiders']
+) -> dict[discord.Role | discord.Member, discord.PermissionOverwrite]:
+    if audience == 'puggers':
+        return {guild.default_role: discord.PermissionOverwrite(view_channel=True, send_messages=True)}
+
+    overwrites: dict[discord.Role | discord.Member, discord.PermissionOverwrite] = {
+        guild.default_role: discord.PermissionOverwrite(view_channel=False)
+    }
+    if guild.me is not None:
+        overwrites[guild.me] = discord.PermissionOverwrite(view_channel=True, send_messages=True)
+    for role in guild.roles:
+        if role.name.lower() in RAIDER_ROLE_NAMES:
+            overwrites[role] = discord.PermissionOverwrite(view_channel=True, send_messages=True)
+    return overwrites
 
 
 async def _get_raid_category(guild: discord.Guild) -> discord.CategoryChannel:
@@ -379,14 +399,22 @@ def setup_raid_commands(tree: app_commands.CommandTree) -> None:
     @app_commands.describe(
         title='Raid title, e.g. "Molten Core"',
         time='When the raid happens, e.g. "tomorrow 9pm" or "Aug 29 20:00"',
+        audience='Puggers = public channel; Raiders = private to Admin/Officer/Raider/RaiderTmp',
         description='Optional extra details',
         leader='Who leads this raid (defaults to you)',
+    )
+    @app_commands.choices(
+        audience=[
+            app_commands.Choice(name='Puggers (public)', value='puggers'),
+            app_commands.Choice(name='Raiders (private)', value='raiders'),
+        ]
     )
     @_is_officer_or_admin()
     async def raid_create(
         interaction: discord.Interaction,
         title: str,
         time: str,
+        audience: app_commands.Choice[str],
         description: str | None = None,
         leader: discord.Member | None = None,
     ):
@@ -404,6 +432,7 @@ def setup_raid_commands(tree: app_commands.CommandTree) -> None:
         raid_channel = await interaction.guild.create_text_channel(
             _raid_channel_name(title, event_at),
             category=category,
+            overwrites=_raid_channel_overwrites(interaction.guild, audience.value),
             reason=f'Raid created by {interaction.user}',
         )
         raid_id = await db.create_raid_event(
